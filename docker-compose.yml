@@ -1,0 +1,45 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: aryanverma
+      MYSQL_DATABASE: employee_db
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: ./backend
+    container_name: backend
+
+    ports:
+      - "5050:5050"
+
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: aryanverma
+      DB_NAME: employee_db
+
+    depends_on:
+      - mysql
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+
+    ports:
+      - "8080:80"
+
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
