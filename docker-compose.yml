@@ -8,8 +8,6 @@ services:
       MYSQL_ROOT_PASSWORD: aryanverma
       MYSQL_DATABASE: employee_db
 
-    ports:
-      - "3306:3306"
 
     volumes:
       - mysql_data:/var/lib/mysql
@@ -43,3 +41,4 @@ services:
 
 volumes:
   mysql_data:
+
